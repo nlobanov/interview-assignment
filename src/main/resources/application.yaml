@@ -1,0 +1,36 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/raynet-assignment
+    username: ${POSTGRES_USER}
+    password: ${POSTGRES_PASSWORD}
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    properties:
+      hibernate:
+        jdbc:
+          batch_size: 100
+  mail:
+    host: ${SMTP_HOST}
+    port: ${SMTP_PORT}
+    username: ${SMTP_USERNAME}
+    password: ${SMTP_PASSWORD}
+
+app:
+  processing:
+    batch-size: 1000
+    max-file-size: 10000000
+    retry-attempts: 3
+    retry-delay: 1000
+    email-notification: ${NOTIFICATION_EMAIL:}
+
+rcrm:
+  api-key: ${RCRM_API_KEY}
+  base-url: ${RCRM_BASE_URL}
+  instance-name: ${RCRM_INSTANCE_NAME}
+  max-daily-calls: 24000
+
+logging:
+  level:
+    com.example.rcrmupdate: INFO
+    org.springframework: WARN
