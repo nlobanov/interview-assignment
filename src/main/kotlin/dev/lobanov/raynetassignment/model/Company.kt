@@ -1,134 +1,46 @@
 package dev.lobanov.raynetassignment.model
 
 import jakarta.persistence.*
-import jakarta.validation.constraints.*
-import org.hibernate.proxy.HibernateProxy
-import java.time.LocalDate
+import org.hibernate.Hibernate
+import org.springframework.data.annotation.CreatedDate
+import org.springframework.data.annotation.LastModifiedDate
+import org.springframework.data.jpa.domain.support.AuditingEntityListener
+import java.time.Instant
 
 @Entity
 @Table(name = "companies")
-data class Company(
+@EntityListeners(AuditingEntityListener::class)
+class Company(
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    val id: Long? = null,
+    var regNumber: String,
+    var title: String,
+    var email: String,
+    var phone: String,
 
-    @field:NotBlank
-    @field:Size(max = 255)
-    val name: String,
-
-    val person: Boolean = false,
-
-    @field:Size(max = 255)
-    val lastName: String? = null,
-
-    @field:Size(max = 255)
-    val firstName: String? = null,
-
-    @field:Size(max = 50)
-    val titleBefore: String? = null,
-
-    @field:Size(max = 50)
-    val titleAfter: String? = null,
-
-    @field:Size(max = 255)
-    val salutation: String? = null,
-
-    @field:Min(1)
-    val securityLevel: Long? = null,
-
-    val owner: Long? = null,
-
-    @field:NotNull
     @Enumerated(EnumType.STRING)
-    val rating: Rating = Rating.C,
+    var upsertStatus: UpsertStatus = UpsertStatus.PENDING,
 
-    @field:NotNull
-    @Enumerated(EnumType.STRING)
-    val state: CompanyState = CompanyState.A_POTENTIAL,
+    @Column(nullable = true)
+    var uploadError: String? = null,
 
-    @field:NotNull
-    @Enumerated(EnumType.STRING)
-    val role: CompanyRole = CompanyRole.A_SUBSCRIBER,
+    @CreatedDate
+    @Column(nullable = false, updatable = false)
+    var createdAt: Instant = Instant.now(),
 
-    @field:Size(max = 1000)
-    val notice: String? = null,
-
-    val category: Long? = null,
-    val contactSource: Long? = null,
-    val employeesNumber: Long? = null,
-    val legalForm: Long? = null,
-    val paymentTerm: Long? = null,
-    val turnover: Long? = null,
-    val economyActivity: Long? = null,
-    val companyClassification1: Long? = null,
-    val companyClassification2: Long? = null,
-    val companyClassification3: Long? = null,
-
-    @field:Pattern(regexp = "\\d{8}")
-    val regNumber: String? = null,
-
-    @field:Pattern(regexp = "[A-Z]{2}\\d{8,10}")
-    val taxNumber: String? = null,
-
-    @field:Pattern(regexp = "SK\\d{10}")
-    val taxNumber2: String? = null,
-
-    @field:NotNull
-    @Enumerated(EnumType.STRING)
-    val taxPayer: TaxPayer? = null,
-
-    @field:Size(max = 50)
-    val bankAccount: String? = null,
-
-    @field:Size(max = 50)
-    val databox: String? = null,
-
-    @field:Size(max = 255)
-    val court: String? = null,
-
-    val birthday: LocalDate? = null,
-
-    @OneToMany(cascade = [CascadeType.ALL], orphanRemoval = true)
-    @JoinColumn(name = "company_id")
-    val addresses: List<CompanyAddress> = emptyList(),
-
-    @Embedded
-    val socialNetworkContact: SocialNetworkContact? = null,
-
-    val originLead: Long? = null,
-
-    @ElementCollection
-    @CollectionTable(name = "company_tags")
-    val tags: Set<String> = emptySet(),
-
-    @ElementCollection
-    @CollectionTable(name = "company_custom_fields")
-    @MapKeyColumn(name = "field_name")
-    @Column(name = "field_value")
-    val customFields: Map<String, String> = emptyMap()
+    @LastModifiedDate
+    @Column(nullable = false)
+    var updatedAt: Instant = Instant.now()
 ) {
-    @AssertTrue(message = "Last name is required for person")
-    fun isLastNameValidForPerson(): Boolean {
-        return !person || (person && !lastName.isNullOrBlank())
-    }
-
-    final override fun equals(other: Any?): Boolean {
+    override fun equals(other: Any?): Boolean {
         if (this === other) return true
-        if (other == null) return false
-        val oEffectiveClass =
-            if (other is HibernateProxy) other.hibernateLazyInitializer.persistentClass else other.javaClass
-        val thisEffectiveClass =
-            if (this is HibernateProxy) this.hibernateLazyInitializer.persistentClass else this.javaClass
-        if (thisEffectiveClass != oEffectiveClass) return false
+        if (other == null || Hibernate.getClass(this) != Hibernate.getClass(other)) return false
         other as Company
-
-        return id != null && id == other.id
+        return regNumber == other.regNumber
     }
 
-    final override fun hashCode(): Int =
-        if (this is HibernateProxy) this.hibernateLazyInitializer.persistentClass.hashCode() else javaClass.hashCode()
+    override fun hashCode(): Int = regNumber.hashCode()
 
     override fun toString(): String {
-        return this::class.simpleName + "(  id = $id   ,   name = $name )"
+        return "Company(regNumber=$regNumber, title=$title)"
     }
 }

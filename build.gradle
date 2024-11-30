@@ -25,31 +25,22 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-data-jpa:3.4.0")
     implementation("org.springframework.boot:spring-boot-starter-mail:3.4.0")
     implementation("org.springframework.boot:spring-boot-starter-validation:3.4.0")
-    implementation("org.springframework.boot:spring-boot-starter-webflux:3.4.0")
     implementation("org.springframework.boot:spring-boot-configuration-processor:3.4.0")
+    testImplementation("org.springframework.boot:spring-boot-starter-test:3.4.0")
     developmentOnly("org.springframework.boot:spring-boot-devtools:3.4.0")
 
-    // Flyway for database migrations
-    implementation("org.flywaydb:flyway-core:11.0.0")
-    implementation("org.flywaydb:flyway-database-postgresql:11.0.0")
-
-    // Kotlin libraries
-    implementation("org.jetbrains.kotlin:kotlin-reflect:1.9.25")
-
     // PostgreSQL driver
-    runtimeOnly("org.postgresql:postgresql:42.6.0")
+    runtimeOnly('org.postgresql:postgresql:42.7.2')
 
     // Jackson
-    implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
+    implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.18.2")
     implementation("org.apache.commons:commons-csv:1.10.0")
 
     // Logging
     implementation("io.github.microutils:kotlin-logging:3.0.5")
 
-    // Testing libraries
-    testImplementation("org.springframework.boot:spring-boot-starter-test:3.4.0")
-    testImplementation("org.jetbrains.kotlin:kotlin-test-junit5:1.9.25")
-    testRuntimeOnly("org.junit.platform:junit-platform-launcher:1.10.0")
+    // Validation
+    implementation("com.googlecode.libphonenumber:libphonenumber:8.13.51")
 }
 
 kotlin {

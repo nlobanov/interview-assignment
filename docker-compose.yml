@@ -1,0 +1,38 @@
+services:
+  postgresql:
+    container_name: postgresql
+    image: docker.io/bitnami/postgresql:17
+    ports:
+      - '8085:5432'
+    environment:
+      - 'ALLOW_EMPTY_PASSWORD=yes'
+      - 'POSTGRES_DB=mydb'
+      - 'POSTGRES_USER=postgres'
+
+  api:
+    container_name: api
+    build:
+      context: .
+      dockerfile: Dockerfile
+    pull_policy: build
+    ports:
+      - '8080:8080'
+    depends_on:
+      - postgresql
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgresql:5432/mydb
+      - SPRING_DATASOURCE_USERNAME=${SPRING_DATASOURCE_USERNAME}
+      - SPRING_DATASOURCE_PASSWORD=${SPRING_DATASOURCE_PASSWORD}
+      - MAIL_SENDER_HOST=${MAIL_SENDER_HOST}
+      - MAIL_SENDER_PORT=${MAIL_SENDER_PORT}
+      - MAIL_SENDER_USERNAME=${MAIL_SENDER_USERNAME}
+      - MAIL_SENDER_PASSWORD=${MAIL_SENDER_PASSWORD}
+      - MAIL_SENDER_PROTOCOL=${MAIL_SENDER_PROTOCOL}
+      - MAIL_SENDER_AUTH=${MAIL_SENDER_AUTH}
+      - MAIL_SENDER_STARTTLS_ENABLE=${MAIL_SENDER_STARTTLS_ENABLE}
+      - MAIL_SENDER_SSL=${MAIL_SENDER_SSL}
+      - RCRM_USERNAME=${RCRM_USERNAME}
+      - RCRM_API_KEY=${RCRM_API_KEY}
+      - RCRM_BASE_URL=${RCRM_BASE_URL}
+      - RCRM_INSTANCE_NAME=${RCRM_INSTANCE_NAME}
+      - UPSERT_NOTIFICATION_EMAIL=${UPSERT_NOTIFICATION_EMAIL}
