@@ -14,6 +14,9 @@ import org.springframework.web.client.HttpClientErrorException
 import org.springframework.web.client.RestTemplate
 import java.util.*
 
+/**
+ * HTTP client for interacting with the RCRM API.
+ */
 @Component
 class RcrmHttpClient(
     private val restTemplate: RestTemplate,

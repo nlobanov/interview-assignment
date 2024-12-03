@@ -5,6 +5,10 @@ import java.time.Instant
 import java.util.concurrent.atomic.AtomicInteger
 import java.util.concurrent.locks.ReentrantLock
 
+/**
+ * Manages RCRM API rate limiting.
+ * Thread-safe implementation using atomic operations and locks.
+ */
 @Component
 class RcrmRateLimiter {
     private var limit: Int? = null

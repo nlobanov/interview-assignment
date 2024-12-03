@@ -2,6 +2,7 @@ package dev.lobanov.raynetassignment.utils
 
 /**
  * Headers for client CSV file.
+ *
  * @property REG_NUMBER Client registration number
  * @property TITLE Client name
  * @property EMAIL Client email address

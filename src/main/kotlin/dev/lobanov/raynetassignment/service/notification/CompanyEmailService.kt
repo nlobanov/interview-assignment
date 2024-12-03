@@ -11,6 +11,9 @@ import java.time.Instant
 
 private val logger = KotlinLogging.logger {}
 
+/**
+ * Service for sending email notifications about company.
+ */
 @Service
 class CompanyEmailService(
     private val mailSender: JavaMailSender,

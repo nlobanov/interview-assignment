@@ -3,6 +3,13 @@ package dev.lobanov.raynetassignment.service.upsert
 import dev.lobanov.raynetassignment.model.Company
 import dev.lobanov.raynetassignment.model.UpsertStatus
 
+/**
+ * Tracks statistics for company upsert operations.
+ *
+ * @property totalProcessed Total number of companies processed through upsert operations
+ * @property successful Number of companies successfully upserted
+ * @property failed Number of companies that failed to upsert
+ */
 class UpsertStatistics {
     var totalProcessed: Int = 0
         private set

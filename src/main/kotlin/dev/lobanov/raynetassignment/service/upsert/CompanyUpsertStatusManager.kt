@@ -6,6 +6,9 @@ import dev.lobanov.raynetassignment.repository.CompanyRepository
 import org.springframework.stereotype.Component
 import org.springframework.transaction.annotation.Transactional
 
+/**
+ * Manages upsert status updates of companies.
+ */
 @Component
 class CompanyUpsertStatusManager(
     private val repository: CompanyRepository

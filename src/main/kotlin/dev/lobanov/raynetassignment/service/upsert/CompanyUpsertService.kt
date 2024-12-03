@@ -19,6 +19,9 @@ import java.util.concurrent.atomic.AtomicInteger
 
 private val logger = KotlinLogging.logger {}
 
+/**
+ * Service for upserting companies to RCRM.
+ */
 @Service
 class CompanyUpsertService(
     private val repository: CompanyRepository,
