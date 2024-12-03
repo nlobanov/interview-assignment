@@ -62,6 +62,7 @@ class CompanyUploadService(
         currentBatch: MutableMap<String, Company>,
         stats: UploadStatistics
     ) {
+        val processedRegNumbers = mutableSetOf<String>()
         parser.forEachIndexed { index, csvRecord ->
             val line = index + 2
             try {
@@ -69,10 +70,10 @@ class CompanyUploadService(
                 val validationResult = validator.validateRecord(companyRecord, props.defaultRegion)
 
                 if (validationResult.isValid) {
-                    if (currentBatch.containsKey(companyRecord.regNumber)) {
+                    if (processedRegNumbers.contains(companyRecord.regNumber)) {
                         stats.incrementDuplicates()
                     }
-
+                    processedRegNumbers.add(companyRecord.regNumber)
                     currentBatch[companyRecord.regNumber] = mapper.toEntity(companyRecord)
 
                     if (currentBatch.size >= props.batchSize) {
