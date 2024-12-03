@@ -7,6 +7,5 @@ data class RcrmProperties(
     val username: String,
     val apiKey: String,
     val baseUrl: String,
-    val instanceName: String,
-    val maxDailyCalls: Int
+    val instanceName: String
 )
