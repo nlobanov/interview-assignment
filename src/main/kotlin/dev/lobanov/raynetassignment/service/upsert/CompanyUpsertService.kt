@@ -36,12 +36,13 @@ class CompanyUpsertService(
         initialDelayString = "\${features.upsert.initial-delay}"
     )
     fun initiateUpserting() {
+        logger.info { "Starting upsert..." }
+
         if (!canStartUpsert()) {
             return
         }
 
         runCatching {
-            logger.info { "Starting upsert..." }
             val stats = executeUpsert()
             notifyIfNeeded(stats)
             logger.info { "Completed upserting ${stats.totalProcessed} companies" }
